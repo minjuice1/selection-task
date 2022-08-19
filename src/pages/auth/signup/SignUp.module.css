@@ -20,37 +20,71 @@
 	border-radius: 5px;
 	font-size: 1rem;
 	font-weight: 700;
-	padding: 20px 60px;
+	padding: 40px 80px;
 }
 
 .userForm div {
-	margin: 10px 0;
+	margin: 15px 0;
 }
 
 .userForm input:nth-child(2) {
 	display: block;
 	width: 15rem;
 	height: 2rem;
+	border: lightgray;
 	border-radius: 5px;
 	font-size: 1.1rem;
+	text-indent: 5px;
+
+	margin-top: 3px;
 }
 
 .submitButton {
 	display: flex;
 	align-self: center;
+	align-items: center;
 	justify-content: center;
 	width: 10rem;
 	height: 4rem;
 	border: 1px solid floralwhite;
 	border-radius: 5px;
 	background-color: cadetblue;
-	color: floralwhite;
+	color: black;
 	font-size: 2rem;
 	font-weight: 700;
 	margin-top: 30px;
 }
 
+.submitButton:disabled,
+.submitButton:disabled:hover {
+	background-color: lightgray;
+	color: lightcyan;
+}
+
 .submitButton:hover {
 	background-color: floralwhite;
 	color: cadetblue;
+}
+
+.goLogin {
+	font-size: 1.1rem;
+	font-weight: 700;
+	margin-top: 30px;
+}
+
+.login {
+	width: 4rem;
+	height: 2rem;
+	border: none;
+	border-radius: 8px;
+	background-color: rgb(237, 228, 228);
+	color: cadetblue;
+	font-size: 1rem;
+	font-weight: 700;
+	margin-left: 7px;
+}
+
+.login:hover {
+	background-color: rgb(191, 232, 218);
+	color: black;
 }
