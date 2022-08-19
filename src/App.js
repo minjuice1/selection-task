@@ -13,7 +13,7 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route path='/' element={<ToDo />}>
-						<Route path='todo/:userId' element={TodoDetail} />
+						<Route path='todo/:userId' element={<TodoDetail />} />
 					</Route>
 					<Route path='/login' element={<Login />} />
 					<Route path='/signup' element={<SignUp />} />
