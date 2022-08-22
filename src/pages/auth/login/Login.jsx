@@ -1,31 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { getUserToken, updateUserToken } from "../../../hooks/useLocalStorage";
+import { signinFetch } from "../../../services/user";
 import styles from "./Login.module.css";
 
 const Login = () => {
 	let navigate = useNavigate();
+	const userToken = getUserToken();
 
-	const [userLoginInfo, setUserLoginInfo] = useState({
+	const [userVaildCheck, setUserVaildCheck] = useState({
 		email: "",
 		password: "",
 	});
+
 	const hangleChange = (e) => {
-		setUserLoginInfo({
-			...userLoginInfo,
+		setUserVaildCheck({
+			...userVaildCheck,
 			[e.target.name]: e.target.value,
 		});
 	};
 
-	const handleLogin = (e) => {
+	useEffect(() => {
+		if (userToken) {
+			navigate("/todo");
+		}
+	}, [userToken]);
+
+	const handleLogin = async (e) => {
 		e.preventDefault();
-		localStorage.setItem("token", JSON.stringify(userLoginInfo));
-		navigate("/");
+		const email = e.target.email.value;
+		const password = e.target.password.value;
+		try {
+			await signinFetch(email, password) //
+				.then((token) => updateUserToken(token));
+			navigate("/todo");
+			alert("로그인 성공!");
+		} catch (e) {
+			alert("로그인 오류 발생");
+		}
 	};
 
 	const filledForm = () => {
 		if (
-			userLoginInfo.email.includes("@") &&
-			userLoginInfo.password.length >= 8
+			userVaildCheck.email.includes("@") &&
+			userVaildCheck.password.length >= 8
 		) {
 			return true;
 		}
@@ -41,7 +59,7 @@ const Login = () => {
 						required
 						type='email'
 						name='email'
-						value={userLoginInfo.email}
+						value={userVaildCheck.email}
 						onChange={hangleChange}
 					/>
 				</div>
@@ -54,7 +72,7 @@ const Login = () => {
 						maxLength='16'
 						minLength='8'
 						autoComplete='off'
-						value={userLoginInfo.password}
+						value={userVaildCheck.password}
 						onChange={hangleChange}
 					/>
 				</div>

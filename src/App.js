@@ -12,11 +12,11 @@ function App() {
 		<div className={styles.app}>
 			<BrowserRouter>
 				<Routes>
-					<Route path='/' element={<ToDo />}>
-						<Route path='todo/:userId' element={<TodoDetail />} />
-					</Route>
-					<Route path='/login' element={<Login />} />
+					<Route path='/' element={<Login />} />
 					<Route path='/signup' element={<SignUp />} />
+					<Route path='/todo' element={<ToDo />}>
+						<Route path=':userId' element={TodoDetail} />
+					</Route>
 					<Route path='*' element={<NotFound />} />
 				</Routes>
 			</BrowserRouter>
