@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserToken, updateUserToken } from "../../../hooks/useLocalStorage";
-import { signinFetch } from "../../../services/user";
+import { getUserToken, updateUserToken } from "hooks/useLocalStorage";
+import { signinFetch } from "services";
 import styles from "./Login.module.css";
 
 const Login = () => {

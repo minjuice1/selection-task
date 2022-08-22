@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserToken, removeUserToken } from "../../../hooks/useLocalStorage";
+import { getUserToken, removeUserToken } from "hooks/useLocalStorage";
 import styles from "./ToDo.module.css";
+import TodoList from "../todo_list/TodoList";
 
 const ToDo = () => {
 	let navigate = useNavigate();
@@ -29,6 +30,9 @@ const ToDo = () => {
 					</button>
 				)}
 			</nav>
+			<section>
+				<TodoList />
+			</section>
 		</>
 	);
 };

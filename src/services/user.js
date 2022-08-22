@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL =
 	"https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/";
 
-export const signupFetch = async (email, password) => {
+const signupFetch = async (email, password) => {
 	const res = await axios({
 		method: "post",
 		url: BASE_URL + "auth/signup",
@@ -16,7 +16,7 @@ export const signupFetch = async (email, password) => {
 	return res.data;
 };
 
-export const signinFetch = async (email, password) => {
+const signinFetch = async (email, password) => {
 	const res = await axios({
 		method: "post",
 		url: BASE_URL + "auth/signin",
@@ -35,3 +35,5 @@ export const signinFetch = async (email, password) => {
 // .catch(function (error) {
 // 	console.log(error);
 // });
+
+export { signupFetch, signinFetch };
