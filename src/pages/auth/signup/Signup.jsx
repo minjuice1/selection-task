@@ -1,32 +1,40 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { signupFetch } from "../../../services/user";
 import styles from "./SignUp.module.css";
 
 const SignUp = () => {
 	let navigate = useNavigate();
 
-	const [userLoginInfo, setUserLoginInfo] = useState({
+	const [userVaildCheck, setUserVaildCheck] = useState({
 		email: "",
 		password: "",
 	});
 
 	const hangleChange = (e) => {
-		setUserLoginInfo({
-			...userLoginInfo,
+		setUserVaildCheck({
+			...userVaildCheck,
 			[e.target.name]: e.target.value,
 		});
 	};
 
-	const handleSignUp = (e) => {
+	const handleSignUp = async (e) => {
 		e.preventDefault();
-		alert("회원가입 완료. 로그인 해주세요.");
-		navigate("/login");
+		const email = e.target.email.value;
+		const password = e.target.password.value;
+		try {
+			await signupFetch(email, password);
+			alert("회원가입 완료. 로그인 해주세요.");
+			navigate("/");
+		} catch (e) {
+			alert("회원가입 오류 발생");
+		}
 	};
 
 	const filledForm = () => {
 		if (
-			userLoginInfo.email.includes("@") &&
-			userLoginInfo.password.length >= 8
+			userVaildCheck.email.includes("@") &&
+			userVaildCheck.password.length >= 8
 		) {
 			return true;
 		}
@@ -42,7 +50,7 @@ const SignUp = () => {
 						required
 						type='email'
 						name='email'
-						value={userLoginInfo.email}
+						value={userVaildCheck.email}
 						onChange={hangleChange}
 					/>
 				</div>
@@ -55,23 +63,10 @@ const SignUp = () => {
 						maxLength='16'
 						minLength='8'
 						autoComplete='off'
-						value={userLoginInfo.password}
+						value={userVaildCheck.password}
 						onChange={hangleChange}
 					/>
 				</div>
-				{/* <div>
-					<label htmlFor='passwordConfirm'>password Confirm </label>
-					<input
-						required
-						type='password'
-						name='passwordConfirm'
-						maxLength='16'
-						minLength='8'
-						autoComplete='off'
-						value={userLoginInfo.passwordConfirm}
-						onChange={hangleChange}
-					/>
-				</div> */}
 				<button
 					disabled={!filledForm()}
 					className={styles.submitButton}
@@ -82,7 +77,7 @@ const SignUp = () => {
 			</form>
 			<div className={styles.goLogin}>
 				이미 회원가입 하셨다면?
-				<Link to='/login'>
+				<Link to='/'>
 					<button className={styles.login}>Login</button>
 				</Link>
 			</div>
