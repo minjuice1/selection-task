@@ -1,13 +1,17 @@
-export const getUserToken = () => {
-	return localStorage.getItem("Token");
-};
-
 export const updateUserToken = (token) => {
-	localStorage.setItem("Token", JSON.stringify(token));
-	return getUserToken(token);
+	let tokenKey = "";
+	for (const [key, value] of Object.entries(token)) {
+		tokenKey = key;
+		localStorage.setItem(key, value);
+	}
+	return getUserToken(tokenKey);
 };
 
-export const removeUserToken = () => {
-	localStorage.removeItem("Token");
+export const getUserToken = (tokenKey) => {
+	return localStorage.getItem(tokenKey);
+};
+
+export const removeUserToken = (token) => {
+	localStorage.removeItem(token);
 	return null;
 };

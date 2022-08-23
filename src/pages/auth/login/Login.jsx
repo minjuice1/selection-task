@@ -4,7 +4,7 @@ import { getUserToken, updateUserToken } from "hooks/useLocalStorage";
 import { signinFetch } from "services";
 import styles from "./Login.module.css";
 
-const Login = () => {
+const Login = ({ setToken }) => {
 	let navigate = useNavigate();
 	const userToken = getUserToken();
 
@@ -32,7 +32,8 @@ const Login = () => {
 		const password = e.target.password.value;
 		try {
 			await signinFetch(email, password) //
-				.then((token) => updateUserToken(token));
+				.then((token) => updateUserToken(token))
+				.then((token) => setToken(token));
 			navigate("/todo");
 			alert("로그인 성공!");
 		} catch (e) {
