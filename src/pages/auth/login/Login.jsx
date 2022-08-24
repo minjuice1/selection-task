@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { updateUserToken } from "hooks";
-import { signinFetch } from "services";
+import { loginFetch } from "services";
 import styles from "./Login.module.css";
 
 const Login = ({ authToken }) => {
@@ -30,10 +30,10 @@ const Login = ({ authToken }) => {
 		const email = e.target.email.value;
 		const password = e.target.password.value;
 		try {
-			await signinFetch(email, password) //
-				.then((token) => updateUserToken(token));
-			navigate("/todo");
+			const login = await loginFetch(email, password);
+			updateUserToken(login);
 			alert("로그인 성공!");
+			navigate("/todo");
 		} catch (e) {
 			alert("로그인 오류 발생");
 		}

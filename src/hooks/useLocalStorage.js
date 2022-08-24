@@ -11,9 +11,8 @@ const getUserToken = () => {
 	return localStorage.getItem("access_token");
 };
 
-const removeUserToken = (token) => {
-	localStorage.removeItem(token);
-	return null;
+const removeUserToken = () => {
+	localStorage.removeItem("access_token");
 };
 
 export { updateUserToken, getUserToken, removeUserToken };

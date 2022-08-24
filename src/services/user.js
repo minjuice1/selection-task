@@ -12,11 +12,10 @@ const signupFetch = async (email, password) => {
 			password: password,
 		},
 	});
-	console.log("회원가입", res);
 	return res.data;
 };
 
-const signinFetch = async (email, password) => {
+const loginFetch = async (email, password) => {
 	const res = await axios({
 		method: "post",
 		url: BASE_URL + "auth/signin",
@@ -25,15 +24,7 @@ const signinFetch = async (email, password) => {
 			password: password,
 		},
 	});
-	console.log("로그인", res);
 	return res.data;
 };
 
-// .then(function (response) {
-// 	console.log(response);
-// })
-// .catch(function (error) {
-// 	console.log(error);
-// });
-
-export { signupFetch, signinFetch };
+export { signupFetch, loginFetch };

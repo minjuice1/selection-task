@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styles from "./App.module.css";
 import Login from "./pages/auth/login/Login";
@@ -9,22 +9,30 @@ import TodoList from "pages/todos/todo_list/TodoList";
 import { getUserToken } from "hooks/useLocalStorage";
 
 function App() {
-	const token = getUserToken();
 	const [todos, setTodos] = useState([]);
+	const [Istoken, setIsToken] = useState(null);
+	useEffect(() => {
+		setIsToken(getUserToken());
+	}, [Istoken]);
 
 	return (
 		<div className={styles.app}>
 			<BrowserRouter>
 				<Routes>
-					<Route path='/' element={<Login authToken={token} />} />
+					<Route path='/' element={<Login authToken={Istoken} />} />
 					<Route path='/signup' element={<SignUp />} />
 					<Route
 						path='/todo'
 						element={
-							<ToDo authToken={token} setTodos={setTodos} todos={todos} />
+							<ToDo
+								setIsToken={setIsToken}
+								authToken={Istoken}
+								setTodos={setTodos}
+								todos={todos}
+							/>
 						}
 					>
-						<Route path=':todoId' element={<TodoList />} />
+						<Route element={<TodoList />} />
 					</Route>
 					<Route path='*' element={<NotFound />} />
 				</Routes>
