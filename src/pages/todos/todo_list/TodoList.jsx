@@ -1,45 +1,43 @@
 import React, { useRef, useState } from "react";
-import { deleteTodoFetch, updateTodoFetch } from "services/todo";
+import {
+	deleteTodoFetch,
+	updateTodoFetch,
+	updateCheckFetch,
+} from "services/todo";
 import styles from "./TodoList.module.css";
 
 const TodoList = ({ id, todo, isCompleted, authToken, fetchTodo }) => {
 	const [editMode, setEditMode] = useState(false);
-	const [IsChecked, setIsChcekd] = useState(false);
+	const [Ischecked, setIsChecked] = useState(isCompleted);
 	const editRef = useRef();
-	const checkedRef = useRef();
-	console.log(isCompleted);
-	// console.log("checkedRef", checkedRef.current.checked);
 
 	const handleDeleteTodo = () => {
 		deleteTodoFetch(authToken, id);
 		fetchTodo();
 	};
 
-	const handleChangeCheckBox = (e) => {
-		const checked = e.target.checked;
-		setIsChcekd(checked);
+	const handleChangeCheckBox = async () => {
+		setIsChecked(!Ischecked);
+		await updateCheckFetch(authToken, id, todo, Ischecked);
 	};
 
 	const handleUpdatedTodo = async () => {
 		const updatedTodo = await editRef.current.value;
 		console.log(updatedTodo);
-		await updateTodoFetch(authToken, id, updatedTodo, IsChecked);
+		await updateTodoFetch(authToken, id, updatedTodo, isCompleted);
 		setEditMode(false);
 		await fetchTodo();
 	};
 
 	return (
 		<div className={styles.todo} key={id}>
-			<div>
-				<span>{id}</span>
+			<div className={styles.wrapper}>
 				<input
-					ref={checkedRef}
+					type='checkBox'
+					checked={Ischecked}
 					onChange={handleChangeCheckBox}
-					type='checkbox'
-					checked={IsChecked}
 					className={styles.checkBox}
 				/>
-
 				{editMode ? (
 					<input
 						defaultValue={todo}

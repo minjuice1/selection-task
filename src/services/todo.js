@@ -35,6 +35,19 @@ const deleteTodoFetch = async (token, id) => {
 	console.log("Todo삭제", res);
 };
 
+const updateCheckFetch = async (token, id, todo, isCompleted) => {
+	const res = await axios({
+		method: "PUT",
+		url: BASE_URL + "/todos" + `/${id}`,
+		headers: { Authorization: `Bearer ${token}` },
+		data: {
+			todo: todo,
+			isCompleted: !isCompleted,
+		},
+	});
+	console.log("check수정", res.data.isCompleted);
+};
+
 const updateTodoFetch = async (token, id, todo, isCompleted) => {
 	const res = await axios({
 		method: "PUT",
@@ -55,4 +68,10 @@ const updateTodoFetch = async (token, id, todo, isCompleted) => {
 // 	console.log(error);
 // });
 
-export { createTodoFetch, getTodoFetch, deleteTodoFetch, updateTodoFetch };
+export {
+	createTodoFetch,
+	getTodoFetch,
+	deleteTodoFetch,
+	updateTodoFetch,
+	updateCheckFetch,
+};
