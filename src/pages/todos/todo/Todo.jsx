@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./ToDo.module.css";
+import { createTodoFetch, getTodoFetch } from "services";
 import TodoList from "../todo_list/TodoList";
-import { createTodoFetch, getTodoFetch } from "services/todo";
 import TodoNav from "../todo_nav/TodoNav";
+import styles from "./Todo.module.css";
 
 const ToDo = ({ authToken, setTodos, todos }) => {
 	let navigate = useNavigate();

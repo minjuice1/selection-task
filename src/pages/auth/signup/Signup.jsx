@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signupFetch } from "services/user";
-import styles from "./SignUp.module.css";
+import { signupFetch } from "services";
+import styles from "./Signup.module.css";
 
 const SignUp = () => {
 	let navigate = useNavigate();

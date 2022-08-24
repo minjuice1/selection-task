@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { removeUserToken } from "hooks/useLocalStorage";
+import { removeUserToken } from "hooks";
 import styles from "./TodoNav.module.css";
 
 const TodoNav = ({ authToken }) => {

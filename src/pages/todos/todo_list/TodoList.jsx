@@ -1,9 +1,5 @@
 import React, { useRef, useState } from "react";
-import {
-	deleteTodoFetch,
-	updateTodoFetch,
-	updateCheckFetch,
-} from "services/todo";
+import { deleteTodoFetch, updateTodoFetch, updateCheckFetch } from "services";
 import styles from "./TodoList.module.css";
 
 const TodoList = ({ id, todo, isCompleted, authToken, fetchTodo }) => {

@@ -1,4 +1,4 @@
-export const updateUserToken = (token) => {
+const updateUserToken = (token) => {
 	let tokenKey = "";
 	for (const [key, value] of Object.entries(token)) {
 		tokenKey = key;
@@ -7,11 +7,13 @@ export const updateUserToken = (token) => {
 	return getUserToken(tokenKey);
 };
 
-export const getUserToken = () => {
+const getUserToken = () => {
 	return localStorage.getItem("access_token");
 };
 
-export const removeUserToken = (token) => {
+const removeUserToken = (token) => {
 	localStorage.removeItem(token);
 	return null;
 };
+
+export { updateUserToken, getUserToken, removeUserToken };

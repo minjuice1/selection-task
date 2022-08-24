@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { updateUserToken } from "hooks/useLocalStorage";
+import { updateUserToken } from "hooks";
 import { signinFetch } from "services";
 import styles from "./Login.module.css";
 
