@@ -21,7 +21,18 @@
 }
 
 .label {
-	margin-left: 3px;
+	margin-left: 10px;
+	list-style: none;
+	cursor: pointer;
+}
+
+.editMode {
+	height: 1.5rem;
+	background-color: rgb(126, 188, 188);
+	font-size: 1.2rem;
+	border: none;
+	outline: none;
+	margin-left: 10px;
 	list-style: none;
 	cursor: pointer;
 }
