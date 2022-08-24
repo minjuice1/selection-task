@@ -7,8 +7,8 @@ export const updateUserToken = (token) => {
 	return getUserToken(tokenKey);
 };
 
-export const getUserToken = (tokenKey) => {
-	return localStorage.getItem(tokenKey);
+export const getUserToken = () => {
+	return localStorage.getItem("access_token");
 };
 
 export const removeUserToken = (token) => {

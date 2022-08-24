@@ -6,16 +6,17 @@ import SignUp from "./pages/auth/signup/SignUp";
 import ToDo from "./pages/todos/todo/ToDo";
 import NotFound from "./pages/not_found/NotFound";
 import TodoList from "pages/todos/todo_list/TodoList";
+import { getUserToken } from "hooks/useLocalStorage";
 
 function App() {
-	const [token, setToken] = useState();
+	const token = getUserToken();
 	const [todos, setTodos] = useState([]);
 
 	return (
 		<div className={styles.app}>
 			<BrowserRouter>
 				<Routes>
-					<Route path='/' element={<Login setToken={setToken} />} />
+					<Route path='/' element={<Login authToken={token} />} />
 					<Route path='/signup' element={<SignUp />} />
 					<Route
 						path='/todo'

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserToken, updateUserToken } from "hooks/useLocalStorage";
+import { updateUserToken } from "hooks/useLocalStorage";
 import { signinFetch } from "services";
 import styles from "./Login.module.css";
 
-const Login = ({ setToken }) => {
+const Login = ({ authToken }) => {
 	let navigate = useNavigate();
-	const userToken = getUserToken();
 
 	const [userVaildCheck, setUserVaildCheck] = useState({
 		email: "",
@@ -21,10 +20,10 @@ const Login = ({ setToken }) => {
 	};
 
 	useEffect(() => {
-		if (userToken) {
+		if (authToken) {
 			navigate("/todo");
 		}
-	}, [userToken]);
+	}, [authToken]);
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
@@ -32,8 +31,7 @@ const Login = ({ setToken }) => {
 		const password = e.target.password.value;
 		try {
 			await signinFetch(email, password) //
-				.then((token) => updateUserToken(token))
-				.then((token) => setToken(token));
+				.then((token) => updateUserToken(token));
 			navigate("/todo");
 			alert("로그인 성공!");
 		} catch (e) {
