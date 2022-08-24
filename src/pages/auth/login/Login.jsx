@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserToken, updateUserToken } from "../../../hooks/useLocalStorage";
-import { signinFetch } from "../../../services/user";
+import { updateUserToken } from "hooks/useLocalStorage";
+import { signinFetch } from "services";
 import styles from "./Login.module.css";
 
-const Login = () => {
+const Login = ({ authToken }) => {
 	let navigate = useNavigate();
-	const userToken = getUserToken();
 
 	const [userVaildCheck, setUserVaildCheck] = useState({
 		email: "",
@@ -21,10 +20,10 @@ const Login = () => {
 	};
 
 	useEffect(() => {
-		if (userToken) {
+		if (authToken) {
 			navigate("/todo");
 		}
-	}, [userToken]);
+	}, [authToken]);
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
