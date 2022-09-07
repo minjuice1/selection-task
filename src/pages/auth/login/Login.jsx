@@ -8,8 +8,8 @@ const Login = ({ authToken }) => {
 	let navigate = useNavigate();
 
 	const [userVaildCheck, setUserVaildCheck] = useState({
-		email: "",
-		password: "",
+		user: "",
+		pwd: "",
 	});
 
 	const hangleChange = (e) => {
@@ -27,23 +27,30 @@ const Login = ({ authToken }) => {
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
-		const email = e.target.email.value;
-		const password = e.target.password.value;
+		const user = e.target.user.value;
+		const pwd = e.target.pwd.value;
 		try {
-			const login = await loginFetch(email, password);
+			const login = await loginFetch(user, pwd);
 			updateUserToken(login);
-			alert("로그인 성공!");
-			navigate("/todo");
-		} catch (e) {
-			alert("로그인 오류 발생");
+			alert(`${user}님 반갑습니다!`);
+			navigate("/");
+		} catch (err) {
+			if (!err?.response) {
+				alert("No Server Response");
+			} else if (err.response?.status === 400) {
+				alert("Missing Username or Password");
+			} else if (err.response?.status === 401) {
+				alert("Invalid Username or Password ");
+			} else if (err.response?.status === 409) {
+				alert("Please, Use Another Username");
+			} else {
+				alert("Sign Up Failed");
+			}
 		}
 	};
 
 	const filledForm = () => {
-		if (
-			userVaildCheck.email.includes("@") &&
-			userVaildCheck.password.length >= 8
-		) {
+		if (userVaildCheck.user.length && userVaildCheck.pwd.length >= 4) {
 			return true;
 		}
 	};
@@ -53,25 +60,26 @@ const Login = ({ authToken }) => {
 			<h1 className={styles.title}>Login</h1>
 			<form onSubmit={handleLogin} className={styles.userForm}>
 				<div>
-					<label htmlFor='email'>Email </label>
+					<label htmlFor='user'>user </label>
 					<input
 						required
-						type='email'
-						name='email'
-						value={userVaildCheck.email}
+						type='text'
+						name='user'
+						maxLength='15'
+						value={userVaildCheck.user}
 						onChange={hangleChange}
 					/>
 				</div>
 				<div>
-					<label htmlFor='password'>password </label>
+					<label htmlFor='pwd'>password </label>
 					<input
 						required
 						type='password'
-						name='password'
-						maxLength='16'
-						minLength='8'
+						name='pwd'
+						maxLength='12'
+						minLength='4'
 						autoComplete='off'
-						value={userVaildCheck.password}
+						value={userVaildCheck.pwd}
 						onChange={hangleChange}
 					/>
 				</div>
@@ -85,7 +93,7 @@ const Login = ({ authToken }) => {
 			</form>
 			<div className={styles.goLogin}>
 				아직 회원가입을 안 하셨다면?
-				<Link to='/signup'>
+				<Link to='/register'>
 					<button className={styles.login}>SignUp</button>
 				</Link>
 			</div>

@@ -1,4 +1,4 @@
-import { signupFetch, loginFetch } from "./user";
+import { registerFetch, loginFetch } from "./auth";
 import {
 	createTodoFetch,
 	getTodoFetch,
@@ -7,7 +7,7 @@ import {
 	updateCheckFetch,
 } from "./todo";
 export {
-	signupFetch,
+	registerFetch,
 	loginFetch,
 	createTodoFetch,
 	getTodoFetch,

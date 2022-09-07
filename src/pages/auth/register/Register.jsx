@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signupFetch } from "services";
+import { registerFetch } from "services";
 import styles from "./Signup.module.css";
 
-const SignUp = () => {
+const Register = () => {
 	let navigate = useNavigate();
 
 	const [userVaildCheck, setUserVaildCheck] = useState({
-		email: "",
-		password: "",
+		user: "",
+		pwd: "",
 	});
 
 	const hangleChange = (e) => {
@@ -20,22 +20,27 @@ const SignUp = () => {
 
 	const handleSignUp = async (e) => {
 		e.preventDefault();
-		const email = e.target.email.value;
-		const password = e.target.password.value;
+		const user = e.target.user.value;
+		const pwd = e.target.pwd.value;
 		try {
-			await signupFetch(email, password);
+			await registerFetch(user, pwd);
 			alert("회원가입 완료. 로그인 해주세요.");
 			navigate("/");
-		} catch (e) {
-			alert("회원가입 오류 발생");
+		} catch (err) {
+			if (!err?.response) {
+				alert("No Server Response");
+			} else if (err.response?.status === 401) {
+				alert("Unauthorized");
+			} else if (err.response?.status === 409) {
+				alert("Please, Use Another Username");
+			} else {
+				alert("Sign Up Failed");
+			}
 		}
 	};
 
 	const filledForm = () => {
-		if (
-			userVaildCheck.email.includes("@") &&
-			userVaildCheck.password.length >= 8
-		) {
+		if (userVaildCheck.user.length && userVaildCheck.pwd.length >= 4) {
 			return true;
 		}
 	};
@@ -45,25 +50,26 @@ const SignUp = () => {
 			<h1 className={styles.title}>SignUp</h1>
 			<form onSubmit={handleSignUp} className={styles.userForm}>
 				<div>
-					<label htmlFor='email'>Email </label>
+					<label htmlFor='user'>user </label>
 					<input
 						required
-						type='email'
-						name='email'
-						value={userVaildCheck.email}
+						type='text'
+						name='user'
+						maxLength='15'
+						value={userVaildCheck.user}
 						onChange={hangleChange}
 					/>
 				</div>
 				<div>
-					<label htmlFor='password'>password </label>
+					<label htmlFor='pwd'>password </label>
 					<input
 						required
 						type='password'
-						name='password'
-						maxLength='16'
-						minLength='8'
+						name='pwd'
+						maxLength='12'
+						minLength='4'
 						autoComplete='off'
-						value={userVaildCheck.password}
+						value={userVaildCheck.pwd}
 						onChange={hangleChange}
 					/>
 				</div>
@@ -77,7 +83,7 @@ const SignUp = () => {
 			</form>
 			<div className={styles.goLogin}>
 				이미 회원가입 하셨다면?
-				<Link to='/'>
+				<Link to='/login'>
 					<button className={styles.login}>Login</button>
 				</Link>
 			</div>
@@ -85,4 +91,4 @@ const SignUp = () => {
 	);
 };
 
-export default SignUp;
+export default Register;
