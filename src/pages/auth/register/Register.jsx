@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerFetch } from "services";
-import styles from "./Signup.module.css";
+import styles from "./Register.module.css";
 
 const Register = () => {
 	let navigate = useNavigate();
