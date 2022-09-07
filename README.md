@@ -1,6 +1,8 @@
 ## Todo List
 
-### 👉 [구현 영상]
+### 👉 [구현 영상 바로가기](https://just-todo-list.netlify.app)
+
+
 ![todo](https://user-images.githubusercontent.com/82799961/186392992-0ce93957-ca17-4f7a-b37a-1c698ac0da07.gif)
 
 
