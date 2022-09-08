@@ -1,11 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { updateUserToken } from "hooks";
 import { loginFetch } from "services";
+import { useRecoilState } from "recoil";
+import {
+	getLoginState,
+	getRolesState,
+	setLoginState,
+	setRolesState,
+} from "context/recoil";
 import styles from "./Login.module.css";
 
-const Login = ({ authToken }) => {
+const Login = () => {
 	let navigate = useNavigate();
+
+	const [setIsLogined] = useRecoilState(setLoginState);
+	const [setIsRoles] = useRecoilState(setRolesState);
+	const allowedLogin = useRecoilState(getLoginState);
+	const allowedRoles = useRecoilState(getRolesState);
+	console.log(allowedLogin);
+	console.log(allowedRoles);
+
+	useEffect(() => {
+		if (allowedLogin) {
+			navigate("/");
+		}
+	}, [allowedLogin]);
 
 	const [userVaildCheck, setUserVaildCheck] = useState({
 		user: "",
@@ -19,19 +38,14 @@ const Login = ({ authToken }) => {
 		});
 	};
 
-	useEffect(() => {
-		if (authToken) {
-			navigate("/todo");
-		}
-	}, [authToken]);
-
 	const handleLogin = async (e) => {
 		e.preventDefault();
 		const user = e.target.user.value;
 		const pwd = e.target.pwd.value;
 		try {
 			const login = await loginFetch(user, pwd);
-			updateUserToken(login);
+			setIsLogined(login.accessToken);
+			setIsRoles(login.roles);
 			alert(`${user}님 반갑습니다!`);
 			navigate("/");
 		} catch (err) {
