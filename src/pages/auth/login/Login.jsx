@@ -1,30 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { loginFetch } from "services";
 import { useRecoilState } from "recoil";
-import {
-	getLoginState,
-	getRolesState,
-	setLoginState,
-	setRolesState,
-} from "context/recoil";
+import { setAuth } from "context/recoil";
 import styles from "./Login.module.css";
 
 const Login = () => {
-	let navigate = useNavigate();
+	const [authed, setAuthed] = useRecoilState(setAuth);
+	console.log(authed);
 
-	const [setIsLogined] = useRecoilState(setLoginState);
-	const [setIsRoles] = useRecoilState(setRolesState);
-	const allowedLogin = useRecoilState(getLoginState);
-	const allowedRoles = useRecoilState(getRolesState);
-	console.log(allowedLogin);
-	console.log(allowedRoles);
-
-	useEffect(() => {
-		if (allowedLogin) {
-			navigate("/");
-		}
-	}, [allowedLogin]);
+	const navigate = useNavigate();
+	const location = useLocation();
+	const from = location.state?.from?.pathname || "/";
 
 	const [userVaildCheck, setUserVaildCheck] = useState({
 		user: "",
@@ -44,10 +31,9 @@ const Login = () => {
 		const pwd = e.target.pwd.value;
 		try {
 			const login = await loginFetch(user, pwd);
-			setIsLogined(login.accessToken);
-			setIsRoles(login.roles);
+			setAuthed(login);
 			alert(`${user}님 반갑습니다!`);
-			navigate("/");
+			navigate(from, { replace: true });
 		} catch (err) {
 			if (!err?.response) {
 				alert("No Server Response");
