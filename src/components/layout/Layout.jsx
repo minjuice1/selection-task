@@ -1,4 +1,4 @@
-import TodoNav from "components/nav/Nav";
+import Nav from "components/layout/nav/Nav";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import style from "./Layout.module.css";
@@ -6,7 +6,7 @@ import style from "./Layout.module.css";
 const Layout = () => {
 	return (
 		<main className={style.app}>
-			<TodoNav />
+			<Nav />
 			<Outlet />
 		</main>
 	);

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { logoutFetch } from "services/auth";
 import styles from "./Nav.module.css";
 
-const TodoNav = () => {
+const Nav = () => {
 	let navigate = useNavigate();
 
 	const handleLogOut = () => {
@@ -23,4 +23,4 @@ const TodoNav = () => {
 	);
 };
 
-export default TodoNav;
+export default Nav;
