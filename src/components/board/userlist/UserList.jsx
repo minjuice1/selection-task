@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Auth } from "context/recoil";
 import { useRecoilState } from "recoil";
 import getUsersFetch from "services/user";
+import styles from "./UserList.module.css";
 
 const Users = () => {
 	const [users, setUsers] = useState();
@@ -27,19 +28,33 @@ const Users = () => {
 		};
 	}, []);
 
+	const whichRole = (user) => {
+		if (user?.roles?.Admin) {
+			return "Admin";
+		} else if (users?.roles?.Manager) {
+			return "Manager";
+		} else {
+			return "User";
+		}
+	};
+
 	return (
-		<>
-			<h2>Users List</h2>
+		<article className={styles.container}>
+			<h2 className={styles.title}>List of all user </h2>
 			{users?.length ? (
-				<ul>
+				<ol>
 					{users.map((user, i) => (
-						<li key={i}>{user?.username}</li>
+						<li key={i}>
+							<a className={styles.id}>ID : {user?.username}</a>
+							<br />
+							<span className={styles.role}>ROLE : {whichRole(user)}</span>
+						</li>
 					))}
-				</ul>
+				</ol>
 			) : (
-				<p>현재 Users List가 비었습니다.</p>
+				<p className={styles.nolist}>User list does not exist.</p>
 			)}
-		</>
+		</article>
 	);
 };
 
