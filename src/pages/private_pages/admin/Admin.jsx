@@ -9,14 +9,16 @@ import styles from "./Admin.module.css";
 const Admin = () => {
 	const [users, setUsers] = useState();
 	const [IsClick, setIsClick] = useState(false);
+	const [selectedUserId, setSelectedUserId] = useState("");
 	const auth = useAuthState();
 	const navigate = useNavigate();
 	const location = useLocation();
+	console.log(users);
 
 	useEffect(() => {
 		let isMounted = true;
 
-		const getUsers = async () => {
+		const getAllUsers = async () => {
 			try {
 				const token = auth?.accessToken;
 				const response = await axiosPrivate.get("/users", {
@@ -31,7 +33,7 @@ const Admin = () => {
 			}
 		};
 
-		getUsers();
+		getAllUsers();
 
 		return () => {
 			isMounted = false;
@@ -48,22 +50,25 @@ const Admin = () => {
 
 	return (
 		<div className={styles.container}>
-			<h1> Admin Page</h1>
+			<h1 className={styles.pageTitle}> Admin Page</h1>
 			<div className={styles.section}>
 				<article
 					className={
-						IsClick ? `${styles.userWrapBox}` : `${styles.userListBox}`
+						IsClick
+							? `${styles.userBox} ${styles.userWrapBox}`
+							: `${styles.userBox} ${styles.userListBox}`
 					}
 				>
 					<h2 className={styles.title}>List of all user </h2>
 					{users?.length ? (
-						<ol>
-							{users.map((user, id) => (
+						<ol className={styles.userList}>
+							{users.map((user) => (
 								<UserList
-									key={id}
+									key={user._id}
 									user={user}
 									handleUserInfo={setIsClick}
 									display={IsClick}
+									selectedUserId={setSelectedUserId}
 								/>
 							))}
 						</ol>
@@ -71,7 +76,7 @@ const Admin = () => {
 						<p className={styles.nolist}>User list does not exist.</p>
 					)}
 				</article>
-				{IsClick && <UserInfo />}
+				{IsClick && <UserInfo token={auth} user={selectedUserId} />}
 			</div>
 		</div>
 	);

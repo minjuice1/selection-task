@@ -5,7 +5,13 @@ body {
 	padding: 0;
 }
 
+.root {
+	display: flex;
+	justify-content: center;
+}
+
 .app {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

@@ -1,8 +1,9 @@
 // import getAllUsersFetch from "services/user";
+import whichRole from "hooks/userWhichRole";
 import React from "react";
 import styles from "./UserList.module.css";
 
-const Users = ({ user, id, handleUserInfo, display }) => {
+const Users = ({ user, handleUserInfo, display, selectedUserId }) => {
 	/* getUserFetch 분리 시도 */
 
 	// useEffect(() => {
@@ -24,25 +25,18 @@ const Users = ({ user, id, handleUserInfo, display }) => {
 	// 	};
 	// }, []);
 
-	const whichRole = (user) => {
-		if (user?.roles?.Admin) {
-			return "Admin";
-		} else if (user?.roles?.Manager) {
-			return "Manager";
-		} else {
-			return "User";
-		}
+	const Clickhandle = () => {
+		selectedUserId(user._id);
+		handleUserInfo(true);
 	};
-
-	// console.log("userList:", user);
 
 	return (
 		<>
 			<li
-				key={id}
+				key={user._id}
 				className={display ? `${styles.wrapType}` : `${styles.listType}`}
 			>
-				<a onClick={() => handleUserInfo(true)} className={styles.id}>
+				<a onClick={Clickhandle} className={styles.id}>
 					ID : {user?.username}
 				</a>
 				<br />
