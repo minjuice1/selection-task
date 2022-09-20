@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { loginFetch } from "services";
 import { useRecoilState } from "recoil";
-import { setAuth } from "context/recoil";
+import { useAuth } from "context/RecoilProvider";
 import styles from "./Login.module.css";
 
 const Login = () => {
-	const [authed, setAuthed] = useRecoilState(setAuth);
-	console.log(authed);
+	const [auth, setAuth] = useRecoilState(useAuth);
+	console.log(auth);
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -31,7 +31,7 @@ const Login = () => {
 		const pwd = e.target.pwd.value;
 		try {
 			const login = await loginFetch(user, pwd);
-			setAuthed(login);
+			setAuth(login);
 			alert(`${user}님 반갑습니다!`);
 			navigate(from, { replace: true });
 		} catch (err) {
