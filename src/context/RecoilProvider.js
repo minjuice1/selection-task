@@ -2,7 +2,7 @@ import { atom, selector } from "recoil";
 
 const useAuth = atom({
 	key: "useAuth",
-	default: 0,
+	default: "",
 });
 
 const getAuth = selector({
