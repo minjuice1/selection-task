@@ -11,6 +11,7 @@ import Admin from "pages/private_pages/admin/Admin";
 import Manager from "pages/private_pages/manager/Manager";
 import NotFound from "./pages/not_found/NotFound";
 import LinkPage from "pages/public_pages/link/LinkPage";
+import PersistLogin from "components/PersistLogin";
 
 const ROLES = {
 	User: 2001,
@@ -32,14 +33,16 @@ function App() {
 				<Route path='todo' element={<Todo />} />
 
 				{/* 관리자 페이지 */}
-				<Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-					<Route path='/' element={<Home />} />
-				</Route>
-				<Route element={<RequireAuth allowedRoles={[ROLES.Manager]} />}>
-					<Route path='manager' element={<Manager />} />
-				</Route>
-				<Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-					<Route path='admin' element={<Admin />} />
+				<Route element={<PersistLogin />}>
+					<Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+						<Route path='/' element={<Home />} />
+					</Route>
+					<Route element={<RequireAuth allowedRoles={[ROLES.Manager]} />}>
+						<Route path='manager' element={<Manager />} />
+					</Route>
+					<Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+						<Route path='admin' element={<Admin />} />
+					</Route>
 				</Route>
 
 				<Route path='*' element={<NotFound />} />
