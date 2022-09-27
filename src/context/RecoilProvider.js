@@ -13,4 +13,17 @@ const getAuth = selector({
 	},
 });
 
-export { useAuth, getAuth };
+const usePersist = atom({
+	key: "usePersist",
+	default: JSON.parse(localStorage.getItem("persist")) || false,
+});
+
+const getPersist = selector({
+	key: "getPersist",
+	get: ({ get }) => {
+		const persist = get(usePersist);
+		return persist;
+	},
+});
+
+export { useAuth, getAuth, usePersist, getPersist };

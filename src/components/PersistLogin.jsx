@@ -2,11 +2,13 @@ import { React, useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import useRefreshToken from "hooks/useRefreshToken";
 import useAuthState from "hooks/useAuthState";
+import usePersistState from "hooks/usePersistState";
 
 const PersistLogin = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const refresh = useRefreshToken();
 	const auth = useAuthState();
+	const persist = usePersistState();
 
 	useEffect(() => {
 		const verifyRefreshToken = async () => {
@@ -19,7 +21,7 @@ const PersistLogin = () => {
 			}
 		};
 
-		!auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
+		!auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
 	}, []);
 
 	useEffect(() => {
@@ -27,7 +29,17 @@ const PersistLogin = () => {
 		console.log(`aT: ${JSON.stringify(auth?.accessToken)}`);
 	}, [isLoading]);
 
-	return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
+	return (
+		<>
+			{!persist ? ( //
+				<Outlet /> //
+			) : isLoading ? (
+				<p>Loading...</p> //
+			) : (
+				<Outlet />
+			)}
+		</>
+	);
 };
 
 export default PersistLogin;

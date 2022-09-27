@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { loginFetch } from "services";
 import { useRecoilState } from "recoil";
-import { useAuth } from "context/RecoilProvider";
+import { usePersist, useAuth } from "context/RecoilProvider";
 import styles from "./Login.module.css";
 
 const Login = () => {
 	const [auth, setAuth] = useRecoilState(useAuth);
+	const [persist, setPersist] = useRecoilState(usePersist);
 	console.log(auth);
 
 	const navigate = useNavigate();
@@ -49,6 +50,14 @@ const Login = () => {
 		}
 	};
 
+	const handleTogglePersist = () => {
+		setPersist((prev) => !prev);
+	};
+
+	useEffect(() => {
+		localStorage.setItem("persist", persist);
+	}, [persist]);
+
 	const filledForm = () => {
 		if (userVaildCheck.user.length && userVaildCheck.pwd.length >= 4) {
 			return true;
@@ -90,6 +99,15 @@ const Login = () => {
 				>
 					Login
 				</button>
+				<div>
+					<input
+						type='checkbox'
+						id='persist'
+						onChange={handleTogglePersist}
+						checked={persist}
+					/>
+					<label htmlFor='persist'>로그인 유지</label>
+				</div>
 			</form>
 			<div className={styles.goLogin}>
 				아직 회원가입을 안 하셨다면?
