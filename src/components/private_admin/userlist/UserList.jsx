@@ -1,25 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { getAuth } from "context/RecoilProvider";
-import { useRecoilState } from "recoil";
-import getUsersFetch from "services/user";
+// import getUsersFetch from "services/user";
 import styles from "./UserList.module.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import { axiosPrivate } from "api/axios";
+import useAuthState from "hooks/useAuthState";
 
 const Users = () => {
 	const [users, setUsers] = useState();
-	const auth = useRecoilState(getAuth);
+	const auth = useAuthState();
+
+	/* getUserFetch 분리 시도 */
+
+	// useEffect(() => {
+	// 	let isMounted = true;
+
+	// 	const getUsers = async () => {
+	// 		try {
+	// 			const token = auth[0]?.accessToken;
+	// 			const res = await getUsersFetch(token);
+	// 			isMounted && setUsers(res);
+	// 		} catch (err) {
+	// 			console.error(err);
+	// 		}
+	// 	};
+	// 	getUsers();
+
+	// 	return () => {
+	// 		isMounted = false;
+	// 	};
+	// }, []);
+
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect(() => {
 		let isMounted = true;
 
 		const getUsers = async () => {
 			try {
-				const token = auth[0]?.accessToken;
-				const res = await getUsersFetch(token);
-				isMounted && setUsers(res);
+				const token = auth?.accessToken;
+				const response = await axiosPrivate.get("/users", {
+					headers: { Authorization: `Bearer ${token}` },
+					withCredentials: true,
+				});
+				console.log(response.data);
+				isMounted && setUsers(response.data);
 			} catch (err) {
 				console.error(err);
+				navigate("/login", { state: { from: location }, replace: true });
 			}
 		};
+
 		getUsers();
 
 		return () => {

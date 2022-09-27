@@ -1,4 +1,3 @@
-// import axios from "api/axios";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const USER_URL = "/users";

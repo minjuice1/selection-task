@@ -32,7 +32,6 @@ const loginFetch = async (user, pwd) => {
 			withCredentials: true,
 		},
 	);
-	// console.log(res.data);
 	return res.data;
 };
 

@@ -3,14 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "components/layout/Layout";
 import Login from "./pages/public_pages/login/Login";
 import Register from "./pages/public_pages/register/Register";
-import Todo from "./pages/todos/todo/Todo";
 import Unauthorized from "pages/unauthorized/Unauthorized";
 import RequireAuth from "components/RequireAuth";
 import Home from "pages/private_pages/home/Home";
 import Admin from "pages/private_pages/admin/Admin";
 import Manager from "pages/private_pages/manager/Manager";
 import NotFound from "./pages/not_found/NotFound";
-import LinkPage from "pages/public_pages/link/LinkPage";
 import PersistLogin from "components/PersistLogin";
 
 const ROLES = {
@@ -25,12 +23,8 @@ function App() {
 			<Route path='/' element={<Layout />}>
 				<Route path='login' element={<Login />} />
 				<Route path='register' element={<Register />} />
-				<Route path='linkpage' element={<LinkPage />} />
 
 				<Route path='unauthorized' element={<Unauthorized />} />
-
-				{/* 잠시 보류 */}
-				<Route path='todo' element={<Todo />} />
 
 				{/* 관리자 페이지 */}
 				<Route element={<PersistLogin />}>

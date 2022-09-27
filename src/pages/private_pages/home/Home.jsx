@@ -1,18 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styles from "./Home.module.css";
 
 const home = () => {
 	return (
 		<section>
-			<h1>Home</h1>
-			<br />
-			<p>You are logged in!</p>
-			<br />
-			<Link to='/manager'>Go to the Manager page</Link>
-			<br />
-			<Link to='/admin'>Go to the Admin page</Link>
-			<br />
-			<Link to='/linkpage'>Go to the link page</Link>
+			<h2 className={styles.title}>Public</h2>
+			<p>
+				<Link to='/login'>Login</Link>
+			</p>
+			<p>
+				<Link to='/register'>Register</Link>
+			</p>
+			<h2 className={styles.title}>Private</h2>
+			<p>
+				<Link to='/manager'>Manager Page</Link>
+			</p>
+			<Link to='/admin'>Admin Page</Link>
 		</section>
 	);
 };

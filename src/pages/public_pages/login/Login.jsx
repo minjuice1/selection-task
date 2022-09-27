@@ -69,7 +69,9 @@ const Login = () => {
 			<h1 className={styles.title}>Login</h1>
 			<form onSubmit={handleLogin} className={styles.userForm}>
 				<div>
-					<label htmlFor='user'>user </label>
+					<label className={styles.user} htmlFor='user'>
+						user{" "}
+					</label>
 					<input
 						required
 						type='text'
@@ -80,7 +82,9 @@ const Login = () => {
 					/>
 				</div>
 				<div>
-					<label htmlFor='pwd'>password </label>
+					<label className={styles.pwd} htmlFor='pwd'>
+						password{" "}
+					</label>
 					<input
 						required
 						type='password'
@@ -92,6 +96,17 @@ const Login = () => {
 						onChange={hangleChange}
 					/>
 				</div>
+				<div className={styles.keepLogin}>
+					<input
+						type='checkbox'
+						id='persist'
+						onChange={handleTogglePersist}
+						checked={persist}
+					/>
+					<label className={styles.persist} htmlFor='persist'>
+						로그인 유지
+					</label>
+				</div>
 				<button
 					disabled={!filledForm()}
 					className={styles.submitButton}
@@ -99,15 +114,6 @@ const Login = () => {
 				>
 					Login
 				</button>
-				<div>
-					<input
-						type='checkbox'
-						id='persist'
-						onChange={handleTogglePersist}
-						checked={persist}
-					/>
-					<label htmlFor='persist'>로그인 유지</label>
-				</div>
 			</form>
 			<div className={styles.goLogin}>
 				아직 회원가입을 안 하셨다면?
