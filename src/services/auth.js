@@ -32,19 +32,21 @@ const loginFetch = async (user, pwd) => {
 			withCredentials: true,
 		},
 	);
-	// console.log(JSON.stringify(res?.data));
-	// console.log(JSON.stringify(res));
-	// const accessToken = res?.data?.accessToken;
-	// const roles = res?.data?.roles;
-	// console.log(accessToken);
-	// console.log(roles);
-	console.log(res);
+	// console.log(res.data);
 	return res.data;
 };
 
-const logoutFetch = async () => {
-	const res = await axios.get(LOGOUT_URL);
-	console.log(res);
+const logoutFetch = async (token) => {
+	try {
+		await axios.get(LOGOUT_URL, {
+			headers: { Authorization: `Bearer ${token}` },
+			withCredentials: true,
+		});
+	} catch (err) {
+		console.error(err);
+	}
+
+	return logoutFetch;
 };
 
 export { registerFetch, loginFetch, logoutFetch };
