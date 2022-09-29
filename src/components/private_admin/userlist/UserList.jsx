@@ -1,8 +1,8 @@
-// import getUsersFetch from "services/user";
+// import getAllUsersFetch from "services/user";
 import React from "react";
 import styles from "./UserList.module.css";
 
-const Users = ({ user, id }) => {
+const Users = ({ user, id, handleUserInfo, display }) => {
 	/* getUserFetch 분리 시도 */
 
 	// useEffect(() => {
@@ -11,7 +11,7 @@ const Users = ({ user, id }) => {
 	// 	const getUsers = async () => {
 	// 		try {
 	// 			const token = auth[0]?.accessToken;
-	// 			const res = await getUsersFetch(token);
+	// 			const res = await getAllUsersFetch(token);
 	// 			isMounted && setUsers(res);
 	// 		} catch (err) {
 	// 			console.error(err);
@@ -34,10 +34,17 @@ const Users = ({ user, id }) => {
 		}
 	};
 
+	// console.log("userList:", user);
+
 	return (
 		<>
-			<li key={id}>
-				<a className={styles.id}>ID : {user?.username}</a>
+			<li
+				key={id}
+				className={display ? `${styles.wrapType}` : `${styles.listType}`}
+			>
+				<a onClick={() => handleUserInfo(true)} className={styles.id}>
+					ID : {user?.username}
+				</a>
 				<br />
 				<span className={styles.role}>ROLE : {whichRole(user)}</span>
 			</li>

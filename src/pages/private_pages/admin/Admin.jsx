@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import UserList from "components/private_admin/userlist/UserList";
 import { useLocation, useNavigate } from "react-router-dom";
 import { axiosPrivate } from "api/axios";
 import useAuthState from "hooks/useAuthState";
+import UserList from "components/private_admin/userlist/UserList";
+import UserInfo from "components/private_admin/userinfo/UserInfo";
 import styles from "./Admin.module.css";
 
 const Admin = () => {
 	const [users, setUsers] = useState();
+	const [IsClick, setIsClick] = useState(false);
 	const auth = useAuthState();
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -36,25 +38,40 @@ const Admin = () => {
 		};
 	}, []);
 
+	// useEffect(() => {
+	// 	if (IsClick) {
+	// 		display = "userListBox";
+	// 	} else {
+	// 		display = "userWrapBox";
+	// 	}
+	// }, [IsClick]);
+
 	return (
 		<div className={styles.container}>
 			<h1> Admin Page</h1>
 			<div className={styles.section}>
-				<article className={styles.userListBox}>
+				<article
+					className={
+						IsClick ? `${styles.userWrapBox}` : `${styles.userListBox}`
+					}
+				>
 					<h2 className={styles.title}>List of all user </h2>
 					{users?.length ? (
 						<ol>
 							{users.map((user, id) => (
-								<UserList key={id} user={user} />
+								<UserList
+									key={id}
+									user={user}
+									handleUserInfo={setIsClick}
+									display={IsClick}
+								/>
 							))}
 						</ol>
 					) : (
 						<p className={styles.nolist}>User list does not exist.</p>
 					)}
 				</article>
-				<div className={styles.todo}>
-					<article></article>
-				</div>
+				{IsClick && <UserInfo />}
 			</div>
 		</div>
 	);

@@ -1,9 +1,23 @@
-li {
+li.wrapType {
+	width: 49%;
+	height: 3.5rem;
+	font-size: 1rem;
+	font-weight: 700;
+	border-bottom: 1px solid rgb(219, 208, 172);
+	padding: 0.5rem 0;
+}
+
+li.listType {
+	width: 49%;
+	height: 4.5rem;
 	font-size: 1.2rem;
 	font-weight: 700;
-	margin-top: 0.5rem;
 	border-bottom: 1px solid rgb(219, 208, 172);
-	padding-bottom: 0.5rem;
+	padding: 0.5rem 0;
+}
+
+li:nth-child(odd) {
+	border-right: 1px solid rgb(219, 208, 172);
 }
 
 .id {
