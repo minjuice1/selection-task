@@ -1,30 +1,14 @@
-import axios from "axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-const BASE_URL =
-	"https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/";
+const USER_URL = "/users";
+const axiosPrivate = useAxiosPrivate();
 
-const signupFetch = async (email, password) => {
-	const res = await axios({
-		method: "post",
-		url: BASE_URL + "auth/signup",
-		data: {
-			email: email,
-			password: password,
-		},
+const getUsersFetch = async (token) => {
+	const res = await axiosPrivate.get(USER_URL, {
+		headers: { Authorization: `Bearer ${token}` },
+		withCredentials: true,
 	});
 	return res.data;
 };
 
-const loginFetch = async (email, password) => {
-	const res = await axios({
-		method: "post",
-		url: BASE_URL + "auth/signin",
-		data: {
-			email: email,
-			password: password,
-		},
-	});
-	return res.data;
-};
-
-export { signupFetch, loginFetch };
+export default getUsersFetch;

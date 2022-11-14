@@ -19,3 +19,8 @@
 	margin-right: 20px;
 	cursor: pointer;
 }
+
+.button:hover {
+	background-color: floralwhite;
+	color: cadetblue;
+}

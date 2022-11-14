@@ -1,0 +1,38 @@
+.container {
+	min-height: 30rem;
+	width: 35%;
+	max-width: 35%;
+	text-align: center;
+	border: 2px solid rgb(227, 209, 152);
+	border-radius: 1rem;
+}
+
+ol {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0;
+	border-top: 3px solid rgb(227, 209, 152);
+}
+
+.title {
+	cursor: pointer;
+}
+
+li {
+	font-size: 1.2rem;
+	font-weight: 700;
+	margin-top: 0.5rem;
+	border-bottom: 1px solid rgb(227, 209, 152);
+	padding-bottom: 0.5rem;
+}
+
+.id {
+	cursor: pointer;
+}
+
+.nolist {
+	color: rgb(191, 60, 60);
+	font-size: 1.2rem;
+	font-weight: 700;
+}

@@ -1,44 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import styles from "./App.module.css";
-import Login from "./pages/auth/login/Login";
-import SignUp from "./pages/auth/signup/Signup";
-import ToDo from "./pages/todos/todo/Todo";
+import { React } from "react";
+import { Routes, Route } from "react-router-dom";
+import Layout from "components/layout/Layout";
+import Login from "./pages/public_pages/login/Login";
+import Register from "./pages/public_pages/register/Register";
+import Unauthorized from "pages/unauthorized/Unauthorized";
+import RequireAuth from "components/RequireAuth";
+import Home from "pages/private_pages/home/Home";
+import Admin from "pages/private_pages/admin/Admin";
+import Manager from "pages/private_pages/manager/Manager";
 import NotFound from "./pages/not_found/NotFound";
-import TodoList from "pages/todos/todo_list/TodoList";
-import { getUserToken } from "hooks/useLocalStorage";
+import PersistLogin from "components/PersistLogin";
+
+const ROLES = {
+	User: 2001,
+	Manager: 1984,
+	Admin: 5150,
+};
 
 function App() {
-	const [todos, setTodos] = useState([]);
-	const [Istoken, setIsToken] = useState(null);
-	useEffect(() => {
-		setIsToken(getUserToken());
-	}, [Istoken]);
-
 	return (
-		<div className={styles.app}>
-			<BrowserRouter>
-				<Routes>
-					<Route path='/' element={<Login authToken={Istoken} />} />
-					<Route path='/signup' element={<SignUp />} />
-					<Route
-						path='/todo'
-						element={
-							<ToDo
-								setIsToken={setIsToken}
-								authToken={Istoken}
-								setTodos={setTodos}
-								todos={todos}
-							/>
-						}
-					>
-						<Route element={<TodoList />} />
+		<Routes>
+			<Route path='/' element={<Layout />}>
+				<Route path='login' element={<Login />} />
+				<Route path='register' element={<Register />} />
+
+				<Route path='unauthorized' element={<Unauthorized />} />
+
+				{/* 관리자 페이지 */}
+				<Route element={<PersistLogin />}>
+					<Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+						<Route path='/' element={<Home />} />
 					</Route>
-					<Route path='*' element={<NotFound />} />
-				</Routes>
-			</BrowserRouter>
-		</div>
+					<Route element={<RequireAuth allowedRoles={[ROLES.Manager]} />}>
+						<Route path='manager' element={<Manager />} />
+					</Route>
+					<Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+						<Route path='admin' element={<Admin />} />
+					</Route>
+				</Route>
+
+				<Route path='*' element={<NotFound />} />
+			</Route>
+		</Routes>
 	);
 }
-
 export default App;
