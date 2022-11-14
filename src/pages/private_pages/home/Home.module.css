@@ -1,3 +1,36 @@
+.container {
+	min-height: 30rem;
+	min-width: 70%;
+	text-align: left;
+	margin: 30px 0 0 0;
+	padding: 15px;
+	border-radius: 1rem;
+}
+
 .title {
 	font-size: 2rem;
+}
+
+fieldset {
+	margin-top: 10px;
+	border: 1.5px solid black;
+	font-weight: 600;
+}
+
+fieldset:nth-child(1) {
+	margin-bottom: 20px;
+}
+
+.links {
+	font-size: 1.6rem;
+	margin: 15px 0;
+}
+
+.linkTitle {
+	text-decoration: none;
+	color: rgb(190, 227, 227);
+}
+
+.linkTitle:hover {
+	color: rgb(23, 106, 107);
 }
