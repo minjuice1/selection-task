@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { useAuth } from "context/RecoilProvider";
 import { logoutFetch } from "services/auth";
@@ -11,6 +11,7 @@ const Nav = () => {
 	const authState = useAuthState();
 	const token = authState.accessToken;
 	let navigate = useNavigate();
+	console.log(auth);
 
 	const handleLogOut = async () => {
 		await logoutFetch(token);
@@ -22,11 +23,23 @@ const Nav = () => {
 	return (
 		<>
 			<nav className={styles.nav}>
-				{auth && token && (
-					<button onClick={handleLogOut} className={styles.button}>
-						LogOut
-					</button>
-				)}
+				<div className={styles.homeNav}>
+					{auth?.roles && (
+						<Link to='/' className={styles.home}>
+							HOME
+						</Link>
+					)}
+				</div>
+				<div className={styles.logoutNav}>
+					{auth?.roles?.length === 3 && (
+						<div className={styles.admin}>ADMIN MODE</div>
+					)}
+					{auth && token && (
+						<button onClick={handleLogOut} className={styles.logout}>
+							LOGOUT
+						</button>
+					)}
+				</div>
 			</nav>
 		</>
 	);
