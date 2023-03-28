@@ -1,0 +1,38 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-height: 30rem;
+	height: 30rem;
+	max-width: 40%;
+	width: 40%;
+	border: 2px solid rgb(219, 208, 172);
+	border-radius: 1rem;
+}
+
+.title {
+	font-size: 2rem;
+	margin: 1rem 0;
+	padding: 0.5rem 0;
+	border-bottom: 2px solid rgb(219, 208, 172);
+}
+
+.idInfo,
+.pwdInfo,
+.roleInfo {
+	height: 1.5rem;
+	font-size: 1.2rem;
+	font-weight: 600;
+	margin-top: 1rem;
+	padding: 1.5rem;
+}
+
+.id,
+.pwd,
+.role {
+	color: rgb(190, 227, 227);
+	font-size: 1.2rem;
+	text-indent: 0.2rem;
+	background-color: transparent;
+	outline: none;
+}

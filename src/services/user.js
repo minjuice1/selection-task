@@ -3,7 +3,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const USER_URL = "/users";
 const axiosPrivate = useAxiosPrivate();
 
-const getUsersFetch = async (token) => {
+const getAllUsersFetch = async (token) => {
 	const res = await axiosPrivate.get(USER_URL, {
 		headers: { Authorization: `Bearer ${token}` },
 		withCredentials: true,
@@ -11,4 +11,13 @@ const getUsersFetch = async (token) => {
 	return res.data;
 };
 
-export default getUsersFetch;
+const getUserFetch = async (token, id) => {
+	const res = await axiosPrivate.get(`${USER_URL}/${id}`, {
+		headers: { Authorization: `Bearer ${token}` },
+		withCredentials: true,
+	});
+	return res.data;
+};
+
+export { getAllUsersFetch, getUserFetch };
+// export default getAllUsersFetch;

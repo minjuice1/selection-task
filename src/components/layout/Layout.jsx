@@ -5,10 +5,12 @@ import style from "./Layout.module.css";
 
 const Layout = () => {
 	return (
-		<main className={style.app}>
-			<Nav />
-			<Outlet />
-		</main>
+		<div className={style.root}>
+			<main className={style.app}>
+				<Nav />
+				<Outlet />
+			</main>
+		</div>
 	);
 };
 
